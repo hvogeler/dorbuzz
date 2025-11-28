@@ -54,7 +54,7 @@ public:
         is_mqtt_connected = v;
     }
 
-    std::string get_is_mqtt_broker_url()
+    std::string get_mqtt_broker_url()
     {
         return mqtt_broker_;
     }

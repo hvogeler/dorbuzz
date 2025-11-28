@@ -7,6 +7,7 @@ idf_component_register(
       led.cpp
       leds.cpp
       mqtt.cpp
+      mqtt_logger.cpp
       nvs.cpp
       state_led_controller.cpp
     INCLUDE_DIRS "."

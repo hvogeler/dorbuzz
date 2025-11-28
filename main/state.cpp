@@ -13,8 +13,6 @@
 #include <thread>
 #include "globals.hpp"
 
-using namespace idf;
-
 static const char *TAG = "state";
 
 #define WIFI_CONNECTED_BIT BIT0
@@ -68,7 +66,7 @@ void State::do_buzzer()
     }
 
     ESP_LOGI(TAG, "Buzzing for %d seconds", CONFIG_DORBUZZ_BUZZER_SECONDS);
-
+    logger.info(TAG, "Buzzing");
     gpio_relay.set_high();
     buz_timer_ = std::make_unique<idf::esp_timer::ESPTimer>([]()
                                                             {

@@ -5,6 +5,7 @@
 #include "freertos/FreeRTOS.h"
 #include "esp_timer_cxx.hpp"
 #include <mutex>
+#include "mqtt_logger.hpp"
 
 typedef enum class StateId
 {
@@ -31,6 +32,7 @@ private:
     state_t state_ = StateId::IDLE;    ///< Current application state
     mutable std::mutex mutex_;
     std::unique_ptr<idf::esp_timer::ESPTimer> buz_timer_;
+    MqttLogger logger;
 
 public:
     State(const State &) = delete;

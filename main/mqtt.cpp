@@ -4,6 +4,7 @@
 #include "esp_log.h"
 #include "nvs.hpp"
 #include "state.hpp"
+#include "mqtt_logger.hpp"
 
 static std::string TAG = "dbz_mqtt";
 
@@ -91,34 +92,39 @@ void Mqtt::subscribe()
 
 static void mqtt5_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
 {
+    MqttLogger logger;
     ESP_LOGD(TAG.c_str(), "Event dispatched from event loop base=%s, event_id=%" PRIi32, base, event_id);
     esp_mqtt_event_handle_t event = static_cast<esp_mqtt_event_handle_t>(event_data);
     esp_mqtt_client_handle_t client = event->client;
+    auto &mqtt = Mqtt::getInstance();
 
     switch ((esp_mqtt_event_id_t)event_id)
     {
     case MQTT_EVENT_CONNECTED:
     {
         ESP_LOGI(TAG.c_str(), "MQTT_EVENT_CONNECTED");
-        auto &mqtt = Mqtt::getInstance();
         mqtt.set_connect_return_code(MQTT_CONNECTION_ACCEPTED);
         mqtt.set_is_mqtt_connected(true);
         mqtt.subscribe();
+        logger.info(TAG, "Connected to mqtt broker %s", mqtt.get_mqtt_broker_url().c_str());
         break;
     }
     case MQTT_EVENT_DISCONNECTED:
         ESP_LOGI(TAG.c_str(), "MQTT_EVENT_DISCONNECTED");
         State::getInstance().set_is_server_connected(false);
+        logger.warning(TAG, "Disconnected from mqtt broker %s", mqtt.get_mqtt_broker_url().c_str());
         ESP_LOGI(TAG.c_str(), "Attempting to reconnect to MQTT broker...");
         esp_mqtt_client_reconnect(client);
         break;
     case MQTT_EVENT_SUBSCRIBED:
         ESP_LOGI(TAG.c_str(), "MQTT_EVENT_SUBSCRIBED");
+        logger.info(TAG, "Subscribed to topic %s", mqtt.get_buzz_topic().c_str());
         State::getInstance().set_is_server_connected(true);
         break;
     case MQTT_EVENT_UNSUBSCRIBED:
         ESP_LOGI(TAG.c_str(), "MQTT_EVENT_UNSUBSCRIBED");
         State::getInstance().set_is_server_connected(false);
+        logger.warning(TAG, "Unsubscribed from topic %s", mqtt.get_buzz_topic().c_str());
         break;
     case MQTT_EVENT_PUBLISHED:
         ESP_LOGI(TAG.c_str(), "MQTT_EVENT_PUBLISHED");
@@ -130,14 +136,16 @@ static void mqtt5_event_handler(void *handler_args, esp_event_base_t base, int32
         std::string msg(static_cast<const char *>(event->data), len);
         ESP_LOGI(TAG.c_str(), "Received Message: %s", msg.c_str());
         State::getInstance().do_buzzer();
+        logger.info(TAG, "buzz message received");
+
         break;
     }
     case MQTT_EVENT_ERROR:
     {
         ESP_LOGI(TAG.c_str(), "MQTT_EVENT_ERROR");
         ESP_LOGI(TAG.c_str(), "MQTT5 return code is %d", event->error_handle->connect_return_code);
-        auto &mqtt = Mqtt::getInstance();
         mqtt.set_connect_return_code(event->error_handle->connect_return_code);
+        logger.error(TAG, "mqtt error");
         break;
     }
     default:

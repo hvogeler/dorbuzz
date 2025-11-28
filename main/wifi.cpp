@@ -103,10 +103,12 @@ esp_err_t Wifi::wifi_connect(void)
     {
         nvs_creds.read("wifi_ssid", wifi_ssid);
         nvs_creds.read("wifi_password", wifi_password);
+    ESP_LOGI(TAG, "SSID 0: %s", wifi_ssid.c_str());
     }
     strncpy((char *)wifi_config.sta.ssid, wifi_ssid.c_str(), sizeof(wifi_config.sta.ssid) - 1);
     strncpy((char *)wifi_config.sta.password, wifi_password.c_str(), sizeof(wifi_config.sta.password) - 1);
 
+    ESP_LOGI(TAG, "SSID: %s", wifi_ssid.c_str());
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());

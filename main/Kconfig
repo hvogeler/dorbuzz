@@ -5,6 +5,12 @@ menu "Dorbuzz"
         help
             Topic to get buzz requests. 
 
+    config DORBUZZ_LOG_TOPIC
+        string "Log Topic"
+        default "log/door/dev/dorbuzz/"
+        help
+            Log topic. device-id and severity added dynamically
+
     config DORBUZZ_BUZZER_SECONDS
         int "Buzzer Seconds"
         default 4
