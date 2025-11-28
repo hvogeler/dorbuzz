@@ -1,0 +1,19 @@
+idf_component_register(
+    SRCS
+      main.cpp
+      state.cpp
+      button.cpp
+      wifi.cpp
+      led.cpp
+      leds.cpp
+      mqtt.cpp
+      nvs.cpp
+      state_led_controller.cpp
+    INCLUDE_DIRS "."
+    REQUIRES
+      driver
+      espressif__esp-idf-cxx
+      esp_wifi
+      nvs_flash
+      mqtt
+      json)

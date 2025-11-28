@@ -1,0 +1,38 @@
+menu "Dorbuzz"
+    config DORBUZ_BUZZ_TOPIC
+        string "Subscribe to get buzz requests"
+        default "dorbuz/buzz/"
+        help
+            Topic to get buzz requests. 
+
+    config DORBUZZ_BUZZER_SECONDS
+        int "Buzzer Seconds"
+        default 4
+        help
+            Duration of buzzer in seconds.
+
+    config DORBUZZ_DISPLAY_ON_SECONDS
+        int "Display on Seconds"
+        default 60
+        help
+            Seconds the display stays on after button press.
+        
+    config DORBUZZ_TIMEZONE
+        string "Timezone for time stamps"
+        default "CET-1CEST,M3.5.0,M10.5.0/3"
+        help
+            Posix time zone
+
+    config DORBUZZ_TIME_SERVER_0
+        string "Time Server 0"
+        default "0.de.pool.ntp.org"
+        help
+            Time Server 0
+
+    config DORBUZZ_TIME_SERVER_1
+        string "Time Server 1"
+        default "1.de.pool.ntp.org"
+        help
+            Time Server 1
+
+endmenu
