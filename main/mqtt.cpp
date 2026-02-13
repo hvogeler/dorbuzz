@@ -90,6 +90,18 @@ void Mqtt::subscribe()
     }
 }
 
+esp_err_t Mqtt::stop()
+{
+    if (!mqtt_client)
+    {
+        ESP_LOGW(TAG.c_str(), "MQTT client not initialized, nothing to stop");
+        return ESP_OK;
+    }
+    ESP_LOGI(TAG.c_str(), "Stopping MQTT client");
+    is_mqtt_connected = false;
+    return esp_mqtt_client_stop(mqtt_client);
+}
+
 static void mqtt5_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
 {
     MqttLogger logger;

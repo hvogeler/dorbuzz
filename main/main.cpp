@@ -16,11 +16,33 @@
 #include "leds.hpp"
 #include "mqtt.hpp"
 #include "state_led_controller.hpp"
+#include "webprov.hpp"
 
 // TODO: CPU to 80MHZ
 
 #define TAG "dbz-main"
 static constexpr uint8_t BRIGHT_DURATION_SECS = CONFIG_DORBUZZ_DISPLAY_ON_SECONDS;
+
+static void blink_yellow_task(void *pvParameters)
+{
+    auto &leds = Leds::getInstance();
+    while (true)
+    {
+        leds.server_led().blink(200);
+    }
+}
+
+static void force_provisioning_cb(void *args, void *user_data)
+{
+    ESP_LOGW(TAG, "Long press detected - starting provisioning mode");
+    auto &mqtt = Mqtt::getInstance();
+    mqtt.stop();
+
+    xTaskCreate(blink_yellow_task, "blink_yellow", 2048, nullptr, 1, nullptr);
+
+    auto &prov = WebProv::getInstance();
+    prov.start_provisioning();
+}
 
 using namespace std;
 using namespace idf;
@@ -44,8 +66,22 @@ extern "C" void app_main(void)
 
     StateLedController state_led_ctrl;
 
+    // Check provisioning status - blocks and reboots if not provisioned
+    auto &prov = WebProv::getInstance();
+    prov.on_prov_start = [&state_led_ctrl](const std::string &ap_ssid)
+    {
+        ESP_LOGI(TAG, "Provisioning started. Connect to WiFi: %s", ap_ssid.c_str());
+        auto &leds = state_led_ctrl.leds();
+        std::lock_guard<std::mutex> lock(leds.getMutex());
+        leds.jingle();
+    };
+    prov.init();
+
+    // Register long-press on button to force re-provisioning
+    state_led_ctrl.register_long_press(force_provisioning_cb);
+
     auto &wifi = Wifi::getInstance();
-    ESP_ERROR_CHECK(wifi.wifi_connect());
+    wifi.wifi_connect();
 
     ret = wifi.time_sync();
     if (ret != ESP_OK)

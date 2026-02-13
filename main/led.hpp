@@ -52,6 +52,8 @@ public:
             return "UNKNOWN";
         }
     }
+
+    void blink(uint32_t duration_ms = 500, uint32_t count = 1);
 };
 
 #endif // LED_HPP

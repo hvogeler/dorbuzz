@@ -59,6 +59,11 @@ public:
     {
         return is_leds_on_;
     }
+
+    void register_long_press(button_cb_t callback)
+    {
+        btn_->register_callback(BUTTON_LONG_PRESS_START, callback);
+    }
 };
 
 #endif
