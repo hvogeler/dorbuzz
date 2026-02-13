@@ -1,6 +1,6 @@
 dependencies:
   espressif/button:
-    component_hash: f53face2ab21fa0ffaf4cf0f6e513d393f56df6586bb2ad1146120f03f19ee05
+    component_hash: fccb18c37f1cfe0797b74a53a44d3f400f5fd01f4993b40052dfb7f401915089
     dependencies:
     - name: espressif/cmake_utilities
       registry_url: https://components.espressif.com
@@ -12,7 +12,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com/
       type: service
-    version: 4.1.3
+    version: 4.1.5
   espressif/cmake_utilities:
     component_hash: 05165f30922b422b4b90c08845e6d449329b97370fbd06309803d8cb539d79e3
     dependencies:
@@ -33,15 +33,30 @@ dependencies:
       registry_url: https://components.espressif.com/
       type: service
     version: 1.0.2-beta
+  hvo/hvo_button:
+    component_hash: 27c513bd96042c5c463b37805d32853cfcf0cffbf62bc08fd884ed30017f340d
+    dependencies:
+    - name: idf
+      version: '>=5.0.0'
+    - name: espressif/button
+      version: ^4.1.4
+    source:
+      git: https://github.com/hvogeler/esp-components.git
+      path: hvo_button
+      type: git
+    version: 006ca41d9a63fcdc501148947e5111b4ba63fcd3
   hvo/nvs:
+    component_hash: 7609173b2960e5e1daa54babf5ba4613ad7f1f34b12673c7585b3028c71cf72a
     dependencies:
     - name: idf
       version: '>=5.0.0'
     source:
-      path: /Users/hvo/Esp32/esp-components/nvs
-      type: local
-    version: 1.0.19
+      git: https://github.com/hvogeler/esp-components.git
+      path: nvs
+      type: git
+    version: add32a90c529980b093e162dceefb5dd6b84bc30
   hvo/wifi:
+    component_hash: 1ceb910955e517d8548c8171e53640dd7f9f9f6e85f7172c27c4d4d0b1db9743
     dependencies:
     - name: idf
       version: '>=5.0.0'
@@ -50,19 +65,20 @@ dependencies:
       path: nvs
       version: '*'
     source:
-      path: /Users/hvo/Esp32/esp-components/wifi
-      type: local
-    version: 1.0.19
+      git: https://github.com/hvogeler/esp-components.git
+      path: wifi
+      type: git
+    version: 006ca41d9a63fcdc501148947e5111b4ba63fcd3
   idf:
     source:
       type: idf
     version: 5.5.2
 direct_dependencies:
-- espressif/button
 - espressif/esp-idf-cxx
+- hvo/hvo_button
 - hvo/nvs
 - hvo/wifi
 - idf
-manifest_hash: f34888b74566d60d32dd665bc4929456af5b0f672a0df73d2c653a592e287aa2
+manifest_hash: a9621a4ce98ef6def9fafef0e74cbe2b56d40c411963b435d9e91e4dde3e1aa7
 target: esp32s3
 version: 2.0.0

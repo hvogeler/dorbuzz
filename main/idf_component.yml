@@ -1,13 +1,18 @@
 ## IDF Component Manager Manifest File
 dependencies:
-  espressif/button: ^4.0.0
   ## Required IDF version
   idf:
     version: ">=5.5.1"
   espressif/esp-idf-cxx: ^1.0.2-beta
-  hvo/wifi:
-    path: ../../esp-components/wifi
-    version: "*"
   hvo/nvs:
-    path: ../../esp-components/nvs
+    git: https://github.com/hvogeler/esp-components.git
+    path: nvs
+    version: "1.0.14"
+  hvo/wifi:
+    git: https://github.com/hvogeler/esp-components.git
+    path: wifi
     version: "*"
+  hvo/hvo_button:
+    git: https://github.com/hvogeler/esp-components.git
+    path: hvo_button
+    version: "1.0.23"

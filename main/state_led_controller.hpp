@@ -18,13 +18,12 @@ class StateLedController
     std::atomic<bool> is_leds_on_{true};
     static constexpr const char *TAG = "StateLedController";
     TaskHandle_t task_handle_;
-    std::unique_ptr<IdfButton> btn_;
+    std::unique_ptr<hvo::Button> btn_;
 
 public:
     StateLedController() : state_(State::getInstance()), leds_(Leds::getInstance()), task_handle_(nullptr)
     {
-        btn_ = std::make_unique<IdfButton>(DORBUZZ_GPIO_LED_BUTTON, 0, false, false);
-        btn_->on_single_click(btn_handler_single, this);
+        btn_ = std::make_unique<hvo::Button>(DORBUZZ_GPIO_LED_BUTTON, 0, BUTTON_SINGLE_CLICK, btn_handler_single, this, false);
 
         xTaskCreate(state_watcher_task, "state_watcher_task", 1024 * 4, this, 1, &task_handle_);
     }

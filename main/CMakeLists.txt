@@ -2,7 +2,6 @@ idf_component_register(
     SRCS
       main.cpp
       state.cpp
-      button.cpp
       led.cpp
       leds.cpp
       mqtt.cpp
@@ -17,4 +16,5 @@ idf_component_register(
       mqtt
       json
       wifi
-      nvs)
+      nvs
+      hvo_button)
