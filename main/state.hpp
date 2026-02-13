@@ -18,7 +18,7 @@ typedef enum class StateId
  * @brief Singleton class managing global application state for the door buzzer system.
  *
  * This class implements the Meyers' Singleton pattern with thread-safe initialization.
- * It manages WiFi connection status, server connection status, and buzzer state,
+ * It manages server connection status and buzzer state,
  * providing mutex-protected access to shared state across FreeRTOS tasks.
  *
  * @note Thread-safe singleton instance creation guaranteed by C++11.
@@ -27,7 +27,6 @@ typedef enum class StateId
 class State
 {
 private:
-    bool is_wlan_connected_ = false;   ///< WiFi connection status
     bool is_server_connected_ = false; ///< Server connection status
     state_t state_ = StateId::IDLE;    ///< Current application state
     mutable std::mutex mutex_;
@@ -77,18 +76,6 @@ public:
      * @param new_state New state value to set.
      */
     void set_state(state_t new_state);
-
-    /**
-     * @brief Get WiFi connection status.
-     * @return true if connected to WiFi, false otherwise.
-     */
-    bool is_wlan_connected(void);
-
-    /**
-     * @brief Set WiFi connection status.
-     * @param connected Connection status to set.
-     */
-    void set_is_wlan_connected(bool connected);
 
     /**
      * @brief Get server connection status.

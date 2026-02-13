@@ -15,21 +15,7 @@
 
 static const char *TAG = "state";
 
-#define WIFI_CONNECTED_BIT BIT0
-#define WIFI_FAIL_BIT BIT1
-#define WIFI_MAXIMUM_RETRY 5
-
 // ============== Member Methods ===============
-bool State::is_wlan_connected(void)
-{
-    return is_wlan_connected_;
-}
-
-void State::set_is_wlan_connected(bool connected)
-{
-    is_wlan_connected_ = connected;
-}
-
 bool State::is_server_connected(void)
 {
     return is_server_connected_;

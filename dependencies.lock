@@ -33,6 +33,26 @@ dependencies:
       registry_url: https://components.espressif.com/
       type: service
     version: 1.0.2-beta
+  hvo/nvs:
+    dependencies:
+    - name: idf
+      version: '>=5.0.0'
+    source:
+      path: /Users/hvo/Esp32/esp-components/nvs
+      type: local
+    version: 1.0.19
+  hvo/wifi:
+    dependencies:
+    - name: idf
+      version: '>=5.0.0'
+    - git: https://github.com/hvogeler/esp-components.git
+      name: hvo/nvs
+      path: nvs
+      version: '*'
+    source:
+      path: /Users/hvo/Esp32/esp-components/wifi
+      type: local
+    version: 1.0.19
   idf:
     source:
       type: idf
@@ -40,7 +60,9 @@ dependencies:
 direct_dependencies:
 - espressif/button
 - espressif/esp-idf-cxx
+- hvo/nvs
+- hvo/wifi
 - idf
-manifest_hash: c2028d699c00ffb0dc3feff6930659080bfb1ebe1c9aab83e7515d098b66e699
+manifest_hash: f34888b74566d60d32dd665bc4929456af5b0f672a0df73d2c653a592e287aa2
 target: esp32s3
 version: 2.0.0

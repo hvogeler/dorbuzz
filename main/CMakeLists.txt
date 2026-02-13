@@ -3,12 +3,10 @@ idf_component_register(
       main.cpp
       state.cpp
       button.cpp
-      wifi.cpp
       led.cpp
       leds.cpp
       mqtt.cpp
       mqtt_logger.cpp
-      nvs.cpp
       state_led_controller.cpp
     INCLUDE_DIRS "."
     REQUIRES
@@ -17,4 +15,6 @@ idf_component_register(
       esp_wifi
       nvs_flash
       mqtt
-      json)
+      json
+      wifi
+      nvs)

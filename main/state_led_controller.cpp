@@ -1,5 +1,6 @@
 
 #include "state_led_controller.hpp"
+#include "wifi.hpp"
 #include "esp_log.h"
 
 void StateLedController::state_watcher_task(void *p)
@@ -21,16 +22,18 @@ void StateLedController::state_watcher_task(void *p)
             continue;
         }
 
+        auto &wifi = Wifi::getInstance();
+        std::lock_guard<std::mutex> lock_wifi(wifi.getMutex());
         std::lock_guard<std::mutex> lock_state(state.getMutex());
 
         std::lock_guard<std::mutex> lock_leds(leds.getMutex());
 
-        if (state.is_wlan_connected() && leds.wlan_led().state() == LedState::off)
+        if (wifi.get_is_connected() && leds.wlan_led().state() == LedState::off)
         {
             leds.wlan_led().turn_on();
         }
 
-        if (!state.is_wlan_connected() && leds.wlan_led().state() == LedState::on)
+        if (!wifi.get_is_connected() && leds.wlan_led().state() == LedState::on)
         {
             leds.wlan_led().turn_off();
         }
