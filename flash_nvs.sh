@@ -5,4 +5,4 @@ python $IDF_PATH/components/nvs_flash/nvs_partition_generator/nvs_partition_gen.
 
 # esptool.py -p /dev/cu.usbmodem101 write_flash 0x9000 nvs_creds.bin
 
-esptool.py -p /dev/cu.usbmodem1401 write_flash 0x9000 nvs_creds.bin
+esptool.py -p /dev/cu.usbmodem1301 write_flash 0x9000 nvs_creds.bin
