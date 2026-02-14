@@ -11,7 +11,7 @@ dependencies:
   hvo/wifi:
     git: https://github.com/hvogeler/esp-components.git
     path: wifi
-    version: "*"
+    version: "1.0.24"
   hvo/hvo_button:
     git: https://github.com/hvogeler/esp-components.git
     path: hvo_button

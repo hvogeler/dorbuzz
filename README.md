@@ -47,3 +47,44 @@ On my MAC it is `/dev/cu.usbmodem1101`.
 
 This flashes the credentials to the devices NVS where they will stay until the flash is cleared.
 Firmware updates will not clear the credentials.
+
+# LED Behavior
+
+There are three LEDs: green (WLAN), yellow (server), and red (buzzing).
+
+## Normal Operation
+
+| LED | Condition | State |
+|---|---|---|
+| Green | WiFi connected | On |
+| Green | WiFi disconnected | Off |
+| Yellow | MQTT broker connected | On |
+| Yellow | MQTT broker disconnected | Off |
+| Red | Door buzzer active | On |
+| Red | Door buzzer idle | Off |
+
+A single button press toggles all LEDs on or off (display toggle).
+
+## Startup - Provisioning Required
+
+When the device is not yet provisioned, it enters provisioning mode. All LEDs play a jingle sequence when provisioning starts.
+
+## WiFi Connection Failed
+
+| LED | State |
+|---|---|
+| Green | Blinking |
+| Yellow | Off |
+| Red | Off |
+
+Long press the button to enter provisioning mode.
+
+## Long Press - Force Provisioning
+
+When the button is long-pressed, the device enters provisioning mode:
+
+| LED | State |
+|---|---|
+| Green | Off |
+| Yellow | Blinking |
+| Red | Off |

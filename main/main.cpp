@@ -23,6 +23,15 @@
 #define TAG "dbz-main"
 static constexpr uint8_t BRIGHT_DURATION_SECS = CONFIG_DORBUZZ_DISPLAY_ON_SECONDS;
 
+static void blink_green_task(void *pvParameters)
+{
+    auto &leds = Leds::getInstance();
+    while (true)
+    {
+        leds.wlan_led().blink(200);
+    }
+}
+
 static void blink_yellow_task(void *pvParameters)
 {
     auto &leds = Leds::getInstance();
@@ -37,6 +46,10 @@ static void force_provisioning_cb(void *args, void *user_data)
     ESP_LOGW(TAG, "Long press detected - starting provisioning mode");
     auto &mqtt = Mqtt::getInstance();
     mqtt.stop();
+
+    auto &leds = Leds::getInstance();
+    leds.wlan_led().turn_off();
+    leds.buzzing_led().turn_off();
 
     xTaskCreate(blink_yellow_task, "blink_yellow", 2048, nullptr, 1, nullptr);
 
@@ -81,17 +94,26 @@ extern "C" void app_main(void)
     state_led_ctrl.register_long_press(force_provisioning_cb);
 
     auto &wifi = Wifi::getInstance();
-    wifi.wifi_connect();
-
-    ret = wifi.time_sync();
-    if (ret != ESP_OK)
+    ret = wifi.wifi_connect();
+    if (ret == ESP_OK)
     {
-        ESP_LOGW(TAG, "Could not sync time with time server");
+        ret = wifi.time_sync();
+        if (ret != ESP_OK)
+        {
+            ESP_LOGW(TAG, "Could not sync time with time server");
+        }
+
+        auto &mqtt = Mqtt::getInstance();
+        mqtt.connect();
     }
-
-    auto &mqtt = Mqtt::getInstance();
-    mqtt.connect();
-
+    else
+    {
+        ESP_LOGW(TAG, "WiFi connect failed - blinking green LED. Long press button to start provisioning.");
+        auto &leds = Leds::getInstance();
+        leds.server_led().turn_off();
+        leds.buzzing_led().turn_off();
+        xTaskCreate(blink_green_task, "blink_green", 2048, nullptr, 1, nullptr);
+    }
     while (1)
     {
         vTaskDelay(pdMS_TO_TICKS(5000));

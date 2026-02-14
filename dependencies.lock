@@ -79,6 +79,6 @@ direct_dependencies:
 - hvo/nvs
 - hvo/wifi
 - idf
-manifest_hash: a9621a4ce98ef6def9fafef0e74cbe2b56d40c411963b435d9e91e4dde3e1aa7
+manifest_hash: 793da7a7f4efb79b4337c7382d634afa4af254eab6e9250224da1261125faa06
 target: esp32s3
 version: 2.0.0
