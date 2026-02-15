@@ -45,6 +45,18 @@ dependencies:
       path: hvo_button
       type: git
     version: 006ca41d9a63fcdc501148947e5111b4ba63fcd3
+  hvo/hvo_led:
+    component_hash: 9b5db3f1d124c1cb20fde451f4227b56581c1da70abf0f805fd4ad7971de6179
+    dependencies:
+    - name: idf
+      version: '>=5.0.0'
+    - name: espressif/esp-idf-cxx
+      version: ^1.0.2-beta
+    source:
+      git: https://github.com/hvogeler/esp-components.git
+      path: hvo_led
+      type: git
+    version: f78d1255233b2f5f8fa0126ee1bde9ea2ec98422
   hvo/nvs:
     component_hash: 7609173b2960e5e1daa54babf5ba4613ad7f1f34b12673c7585b3028c71cf72a
     dependencies:
@@ -56,7 +68,7 @@ dependencies:
       type: git
     version: add32a90c529980b093e162dceefb5dd6b84bc30
   hvo/wifi:
-    component_hash: 1ceb910955e517d8548c8171e53640dd7f9f9f6e85f7172c27c4d4d0b1db9743
+    component_hash: d38cc407ac000d3232ba243097f767c8fd1152c53a2ce146f7af6bab009f542f
     dependencies:
     - name: idf
       version: '>=5.0.0'
@@ -68,7 +80,7 @@ dependencies:
       git: https://github.com/hvogeler/esp-components.git
       path: wifi
       type: git
-    version: 006ca41d9a63fcdc501148947e5111b4ba63fcd3
+    version: dfc0cb2f15fdfe9d6887616afba22ffb23aff34b
   idf:
     source:
       type: idf
@@ -76,9 +88,10 @@ dependencies:
 direct_dependencies:
 - espressif/esp-idf-cxx
 - hvo/hvo_button
+- hvo/hvo_led
 - hvo/nvs
 - hvo/wifi
 - idf
-manifest_hash: 793da7a7f4efb79b4337c7382d634afa4af254eab6e9250224da1261125faa06
+manifest_hash: f365e9581f6a927c2fceb13d698f4d3e7e53bce8d82b92b9fdd2ef5455e2910e
 target: esp32s3
 version: 2.0.0

@@ -18,4 +18,4 @@ idf_component_register(
       nvs
       hvo_button
       webprov
-      led)
+      hvo_led)

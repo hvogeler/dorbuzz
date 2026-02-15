@@ -16,3 +16,7 @@ dependencies:
     git: https://github.com/hvogeler/esp-components.git
     path: hvo_button
     version: "1.0.23"
+  hvo/hvo_led:
+    git: https://github.com/hvogeler/esp-components.git
+    path: hvo_led
+    version: "1.0.25"
