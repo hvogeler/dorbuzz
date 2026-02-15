@@ -6,13 +6,14 @@
 #include "driver/gpio.h"
 #include "gpio_cxx.hpp"
 
+namespace hvo {
+
 typedef enum class LedState
 {
     on,
     off,
 } led_state_t;
 
-// LED functionality declarations will go here
 class Led
 {
     idf::GPIO_Output gpio_pin_;
@@ -55,5 +56,7 @@ public:
 
     void blink(uint32_t duration_ms = 500, uint32_t count = 1);
 };
+
+} // namespace hvo
 
 #endif // LED_HPP

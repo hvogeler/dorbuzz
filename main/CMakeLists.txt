@@ -2,7 +2,6 @@ idf_component_register(
     SRCS
       main.cpp
       state.cpp
-      led.cpp
       leds.cpp
       mqtt.cpp
       mqtt_logger.cpp
@@ -18,4 +17,5 @@ idf_component_register(
       wifi
       nvs
       hvo_button
-      webprov)
+      webprov
+      led)

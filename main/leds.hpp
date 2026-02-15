@@ -10,6 +10,9 @@
 #include "freertos/task.h"
 #include "globals.hpp"
 
+using hvo::Led;
+using hvo::LedState;
+
 /**
  * @brief Singleton class for managing LEDs.
  *

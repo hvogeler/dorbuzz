@@ -2,7 +2,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-void Led::blink(uint32_t duration_ms, uint32_t count)
+void hvo::Led::blink(uint32_t duration_ms, uint32_t count)
 {
     for (uint32_t i = 0; i < count; i++)
     {
